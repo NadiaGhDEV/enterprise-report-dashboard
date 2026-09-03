@@ -15,14 +15,15 @@ public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Long DepartmentID;
+    private Long departmentId;
 
     @Column(nullable = false, unique = true)
-    private String DepartmentName;
+    private String departmentName;
 
-    @JoinColumn
-    @OneToMany
+    @Column(nullable = false)
+    private boolean active = true;
+
+    @OneToMany(mappedBy = "department")
     private List<Report> reports;
-
 
 }

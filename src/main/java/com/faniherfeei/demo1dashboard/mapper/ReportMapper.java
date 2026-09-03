@@ -1,8 +1,9 @@
 package com.faniherfeei.demo1dashboard.mapper;
 
-import com.faniherfeei.demo1dashboard.dto.ReportDto;
+import com.faniherfeei.demo1dashboard.dto.ReportRequestDto;
 import com.faniherfeei.demo1dashboard.dto.ReportResponseDto;
 import com.faniherfeei.demo1dashboard.dto.RowDto;
+import com.faniherfeei.demo1dashboard.model.Account;
 import com.faniherfeei.demo1dashboard.model.Department;
 import com.faniherfeei.demo1dashboard.model.Report;
 import com.faniherfeei.demo1dashboard.model.RowData;
@@ -14,10 +15,11 @@ public class ReportMapper {
     private ReportMapper() {
     }
 
-    public static Report toEntity(ReportDto dto, Department department) {
+    public static Report toEntity(Account account, ReportRequestDto dto, Department department) {
         Report report = new Report();
         report.setTitle(dto.title());
         report.setDescription(dto.description());
+        report.setAccount(account);
         report.setDepartment(department);
         report.setColumns(dto.columns());
         report.setRows(toRowDataList(dto.rows()));
@@ -29,7 +31,7 @@ public class ReportMapper {
                 report.getId(),
                 report.getTitle(),
                 report.getDescription(),
-                report.getDepartment().getDepartmentID(),
+                report.getDepartment().getDepartmentId(),
                 report.getDepartment().getDepartmentName(),
                 report.getColumns(),
                 toRowDtoList(report.getRows()),

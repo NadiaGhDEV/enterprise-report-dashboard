@@ -1,8 +1,5 @@
 package com.faniherfeei.demo1dashboard.dto;
 
-import com.faniherfeei.demo1dashboard.model.RowData;
-
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -12,6 +9,7 @@ public record ReportResponseDto(
         String description,
         Long departmentId,
         String departmentName,
+//        String createdByUsername,
         List<String> columns,
         List<RowDto> rows,
         LocalDateTime createdAt

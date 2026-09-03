@@ -3,19 +3,20 @@ package com.faniherfeei.demo1dashboard.dto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 
-import java.math.BigDecimal;
 import java.util.List;
 
-public record ReportDto(
+public record ReportRequestDto(
+
+        @NotBlank
+        @Size(max = 500)
+        String title,
 
         @Size(max = 1000)
         String description,
 
-        @NotBlank
-        @Size(max = 1000)
-        String title,
 
-        @NotEmpty @Size(max = 14, message = "حداکثر ۱۰ ستون مجاز است")
+
+        @NotEmpty @Size(max = 14)
         List<@NotBlank String> columns,
 
 
@@ -25,11 +26,9 @@ public record ReportDto(
         @NotNull
         Long departmentId
 
-//        @NotNull
-//        String departmentName
-//        department name
 ) {
-    @AssertTrue(message = "طول مقادیر هر ردیف باید برابر تعداد ستون‌ها باشد")
+
+    @AssertTrue(message = "Each row's value count must match the number of columns")
     public boolean isRowsValid() {
         return rows.stream().allMatch(row -> row.values().size() == columns.size());
     }

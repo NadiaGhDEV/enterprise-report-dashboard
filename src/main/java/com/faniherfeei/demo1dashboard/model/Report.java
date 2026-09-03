@@ -12,8 +12,6 @@ import java.util.List;
 @Entity
 @Table(schema = "dashboard")
 @Data
-@Getter
-@Setter
 @EqualsAndHashCode(of = "id")
 @ToString(exclude = "department")
 public class Report {
@@ -27,7 +25,7 @@ public class Report {
 
     private String description;
 
-    @JoinColumn(name = "department_name", nullable = false)
+    @JoinColumn(name = "department_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private Department department;
 
@@ -42,4 +40,8 @@ public class Report {
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime createdAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id", nullable = false)
+    private Account account;
 }
