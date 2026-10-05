@@ -17,4 +17,6 @@ public interface AccountRepository extends JpaRepository<Account, String> {
 
     @Query("SELECT a FROM Account a LEFT JOIN FETCH a.permissions WHERE a.userId = :id")
     Optional<Account> findByIdWithPermissions(@Param("id") String id);
+
+    Optional<Account> findByUserId(String userId);
 }

@@ -1,14 +1,12 @@
 package com.faniherfeei.demo1dashboard.controller;
 
 import com.faniherfeei.demo1dashboard.dto.*;
-import com.faniherfeei.demo1dashboard.model.UserPrincipal;
 import com.faniherfeei.demo1dashboard.service.AccountService;
 import com.faniherfeei.demo1dashboard.service.DepartmentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,16 +49,15 @@ public class AdminAccountController {
         return ResponseEntity.ok(departmentService.getAllDepartments());
     }
 
-    @PostMapping("/permissions/{departmentId}")
-    public ResponseEntity<AccountResponseDto> grantDepartmentAccess(@AuthenticationPrincipal UserPrincipal currentUser, @PathVariable Long departmentId) {
-        AccountResponseDto account = accountService.grantDepartmentAccess(currentUser.getAccount(),departmentId);
+    @PutMapping("/permissions/{userId}")
+    public ResponseEntity<AccountResponseDto> grantDepartmentAccess(@PathVariable String userId,@RequestParam Long departmentId) {
+        AccountResponseDto account = accountService.grantDepartmentAccess(accountService.findById(userId), departmentId);
         return ResponseEntity.status(HttpStatus.CREATED).body(account);
     }
 
-    @DeleteMapping("/permissions/{departmentId}")
-    public ResponseEntity<Void> revokeDepartmentAccess(
-            @AuthenticationPrincipal UserPrincipal currentUser, @PathVariable Long departmentId) {
-        accountService.revokeDepartmentAccess(currentUser.getAccount(), departmentId);
+    @DeleteMapping("/permissions/{userId}")
+    public ResponseEntity<Void> revokeDepartmentAccess(@PathVariable String userId, @RequestBody Long departmentId) {
+        accountService.revokeDepartmentAccess(accountService.findById(userId), departmentId);
         return ResponseEntity.noContent().build();
     }
 

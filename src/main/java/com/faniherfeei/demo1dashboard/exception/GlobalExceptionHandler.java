@@ -7,12 +7,20 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;   // 👈 اضافه کنید
 
 import java.util.HashMap;
 import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    // 👇 این متد را اضافه کنید
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<Map<String,String>> handleNoResource(NoResourceFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Map.of("error", "Resource not found"));
+    }
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<Map<String,String>> handleNotFound(NotFoundException e) {

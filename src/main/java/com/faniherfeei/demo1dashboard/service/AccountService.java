@@ -108,4 +108,8 @@ public class AccountService {
         accountRepository.save(account);
     }
 
+    public Account findById(String userId) {
+    return accountRepository.findByUserId(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
+    }
+
 }
