@@ -43,7 +43,6 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login").permitAll()
                         .requestMatchers("/profile").hasAnyRole("ADMIN", "MANAGER", "USER")
 
                         .requestMatchers("/reports/getReports").hasRole("MANAGER")
